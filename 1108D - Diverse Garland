@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    char str[200005];
+    int n, i, j, k, cnt = 0;
+    string s = "RGB";
+    scanf("%d %s", &n, str);
+    for(i = 1; i < n - 1; i++)
+    {
+        char t1, t2, t3;
+        t1 = str[i-1];
+        t2 = str[i];
+        t3 = str[i+1];
+        if(t1 == t2)
+        {
+            string temp = s;
+            temp.erase(remove(temp.begin(), temp.end(), t1), temp.end());
+            temp.erase(remove(temp.begin(), temp.end(), t3), temp.end());
+            str[i] = temp[0];
+            cnt++;
+        }
+    }
+    if(str[i-1] == str[i])
+    {
+        s.erase(remove(s.begin(), s.end(), str[i]), s.end());
+        str[i] = s[0];
+        cnt++;
+    }
+    printf("%d\n%s", cnt, str);
+    return 0;
+}
