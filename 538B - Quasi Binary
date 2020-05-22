@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+
+    string str;
+    int n, i, j, k, mx = 0, z;
+    string num[11];
+    cin>>str;
+    n = str.size();
+    for(i = 0; i < n; i++)
+    {
+        z = str[i] - '0';
+        mx = max(mx, z);
+        for(j = 0; j < z; j++)
+            num[j].push_back('1');
+        for( ; j < mx; j++)
+            num[j].push_back('0');
+    }
+    cout<<mx<<endl;
+    for(i = 0; i < mx; i++)
+        cout<<num[i]<<" ";
+    return 0;
+}
