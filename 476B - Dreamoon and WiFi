@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, org_val, un_org_val, un_val;
+string str1, str2;
+
+void sol(int pos, int val)
+{
+    if(pos == n)
+    {
+        if(val == org_val)
+            un_org_val++;
+        else
+            un_val++;
+        return;
+    }
+    if(str2[pos] == '+')
+        sol(pos+1, val+1);
+    else if(str2[pos] == '-')
+        sol(pos+1, val-1);
+    else
+    {
+        sol(pos+1, val+1);
+        sol(pos+1, val-1);
+    }
+    return;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+
+    int i, k, m;
+    cin>>str1>>str2;
+    n = str1.size();
+    for(i = 0; i < n; i++)
+    {
+        if(str1[i] == '+')
+            org_val++;
+        else
+            org_val--;
+    }
+    sol(0, 0);
+    printf("%0.12f", un_org_val/((un_val+un_org_val) * 1.0));
+    return 0;
+}
