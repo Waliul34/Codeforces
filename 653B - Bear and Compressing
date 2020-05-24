@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+map<char, vector<string>>mapp;
+int n, cnt;
+
+void sol(string str, int siz)
+{
+    char c = str[0];
+    if(siz > n)
+        return;
+    if(siz == n)
+    {
+        cnt++;
+        return;
+    }
+    int i, sz;
+    sz = mapp[c].size();
+    for(i = 0; i < sz; i++)
+    {
+        sol(mapp[c][i], siz+1);
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+
+    string st;
+    char c;
+    int i, j, k, q;
+    cin>>n>>q;
+    while(q--)
+    {
+        cin>>st>>c;
+        mapp[c].push_back(st);
+    }
+    sol("a", 1);
+    cout<<cnt;
+    return 0;
+}
