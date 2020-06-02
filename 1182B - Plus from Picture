@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool visited[505][505];
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+
+    int h, w, n, i, j, k, row(0) , col(0);
+    cin>>h>>w;
+    string str[h];
+    for(i = 0; i < h; i++)
+        cin>>str[i];
+    for(i = 1; i < h - 1; i++)
+    {
+        for(j = 1; j < w - 1; j++)
+        {
+            if(str[i][j] == '*')
+            {
+                if(str[i][j-1] == '*' && str[i][j+1] == '*' && str[i-1][j] == '*' && str[i+1][j] == '*')
+                {
+                    row = i;
+                    col = j;
+                    visited[row][col] = true;
+                    break;
+                }
+            }
+        }
+    }
+    if(row != 0 && col != 0)
+    {
+        for(i = col; i >= 0; i--)
+        {
+            if(str[row][i] != '*')
+                break;
+            visited[row][i] = true;
+        }
+        for(i = col; i < w; i++)
+        {
+            if(str[row][i] != '*')
+                break;
+            visited[row][i] = true;
+        }
+        for(i = row; i >= 0; i--)
+        {
+            if(str[i][col] != '*')
+                break;
+            visited[i][col] = true;
+        }
+        for(i = row; i < h; i++)
+        {
+            if(str[i][col] != '*')
+                break;
+            visited[i][col] = true;
+        }
+        for(i = 0; i < h; i++)
+        {
+            for(j = 0; j < w; j++)
+            {
+                if(visited[i][j] == false && str[i][j] == '*')
+                {
+                    cout<<"NO";
+                    return 0;
+                }
+            }
+        }
+        cout<<"YES";
+    }
+    else
+        cout<<"NO";
+    return 0;
+}
