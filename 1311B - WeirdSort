@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+ 
+    int t, n, m, i, j, k, cnt, mx, x;
+    cin>>t;
+    while(t--)
+    {
+        cin>>n>>m;
+        vector<int>arr, swa, temp;
+        for(i = 0; i < n; i++)
+        {
+            cin>>x;
+            arr.push_back(x);
+            temp.push_back(x);
+        }
+        for(i = 0; i < m; i++)
+        {
+            cin>>x;
+            swa.push_back(x);
+        }
+        sort(swa.begin(), swa.end());
+        sort(arr.begin(), arr.end());
+        for(i = 0; i < m; i++)
+        {
+            j = swa[i] - 1;
+            k = swa[i];
+            while((i < (m - 1)) && ((k + 1) == swa[i+1]))
+            {
+                k++;
+                i++;
+            }
+            k++;
+            sort(temp.begin()+j, temp.begin()+k);
+        }
+        if(temp == arr)
+            cout<<"YES\n";
+        else
+            cout<<"NO\n";
+    }
+    return 0;
+}
