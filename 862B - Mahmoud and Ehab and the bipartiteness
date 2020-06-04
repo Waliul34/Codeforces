@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int visited[100005];
+int color[100005];
+long long int cnt[2];
+vector<int>adj[100005];
+ 
+void dfs(int s)
+{
+    for(auto it : adj[s])
+    {
+        if(!visited[it])
+        {
+            color[it] = !color[s];
+            visited[it] = true;
+            dfs(it);
+        }
+    }
+}
+ 
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+ 
+    long long int n, i, j, k, u, v;
+    cin>>n;
+    for(i = 1; i < n; i++)
+    {
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    visited[1] = true;
+    color[1] = 0;
+    dfs(1);
+    for(i = 1; i <= n; i++)
+        cnt[color[i]]++;
+    cout<<(cnt[0]*cnt[1]) - (n - 1);
+    return 0;
+}
