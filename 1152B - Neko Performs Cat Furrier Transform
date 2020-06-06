@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+vector<int>ans;
+void solv(int x, int step)
+{
+    int cnt = __builtin_popcount(x);
+    int num = pow(2, cnt) - 1;
+    if(x == num)
+    {
+        cout<<step<<endl;
+        return;
+    }
+    if(step % 2)
+    {
+        solv(x+1, step+1);
+    }
+    else
+    {
+        int i;
+        for(i = 30; i >= 0; i--)
+        {
+            if(1<<i & x)
+            {
+                int nn = pow(2, i+1) - 1;
+                solv(x ^ nn, step + 1);
+                break;
+            }
+        }
+        ans.push_back(i+1);
+    }
+    return;
+}
+ 
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+ 
+    int x;
+    cin>>x;
+    solv(x, 0);
+    reverse(ans.begin(), ans.end());
+    for(auto it : ans)
+        cout<<it<<" ";
+    return 0;
+}
