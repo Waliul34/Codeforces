@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+
+    bool del[105];
+    memset(del, false, sizeof(del));
+    int n, m, i, j, k, cnt, x, u, v;
+    cin>>n>>m;
+    vector<int>adj[n+1];
+    for(i = 0; i < m; i++)
+    {
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    k = 0;
+    while(1)
+    {
+        vector<int>be_del;
+        for(i = 1; i <= n; i++)
+        {
+            cnt = 0;
+            if(del[i])
+                continue;
+            for(auto it : adj[i])
+            {
+                if(!del[it])
+                    cnt++;
+            }
+            if(cnt == 1)
+            {
+                be_del.push_back(i);
+            }
+        }
+        if(!be_del.size())
+            break;
+        k++;
+        for(auto it : be_del)
+            del[it] = true;
+    }
+    cout<<k;
+    return 0;
+}
