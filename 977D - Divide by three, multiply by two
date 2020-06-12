@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+long long int i, n, arr[105];
+map<long long int, int>mapp;
+
+bool bfs(long long int s)
+{
+    vector<long long int>vec;
+    queue<long long int>q;
+    q.push(s);
+    vec.push_back(s);
+    while(!q.empty())
+    {
+        long long int x, y, top = q.front();
+        q.pop();
+        x = top * 2;
+        y = top / 3;
+        if(mapp[x])
+        {
+            vec.push_back(x);
+            q.push(x);
+        }
+        if(!(top % 3))
+        {
+            if(mapp[y])
+            {
+                vec.push_back(y);
+                q.push(y);
+            }
+        }
+    }
+    if(vec.size() == n)
+    {
+        for(auto it : vec)
+            cout<<it<<" ";
+        return true;
+    }
+    return false;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+
+    cin>>n;
+    for(i = 0; i < n; i++)
+    {
+        cin>>arr[i];
+        mapp[arr[i]] = 1;
+    }
+    for(i = 0; i < n; i++)
+    {
+        if(bfs(arr[i]))
+            break;
+    }
+    return 0;
+}
