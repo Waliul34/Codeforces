@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int>adj[500005];
+bool visited[500005];
+int cnt[500005];
+
+void bfs(int s)
+{
+    if(!visited[s])
+    {
+        set<int>grp;
+        grp.insert(s);
+        queue<int>q;
+        visited[s] = true;
+        q.push(s);
+        while(!q.empty())
+        {
+            int t = q.front();
+            q.pop();
+            for(auto it : adj[t])
+            {
+                if(!visited[it])
+                {
+                    grp.insert(it);
+                    q.push(it);
+                    visited[it] = true;
+                }
+            }
+        }
+        int sz = grp.size();
+        for(auto it : grp)
+            cnt[it] = sz;
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+
+    int n, i, j, k, x, m, s;
+    cin>>n>>m;
+    while(m--)
+    {
+        cin>>k;
+        for(i = 0; i < k; i++)
+        {
+            cin>>x;
+            if(i == 0)
+                s = x;
+            adj[s].push_back(x);
+            adj[x].push_back(s);
+        }
+    }
+    for(i = 1; i <= n; i++)
+        bfs(i), cout<<cnt[i]<<" ";
+    return 0;
+}
