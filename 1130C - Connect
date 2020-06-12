@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int n, r1, c1, r2, c2;
+int arr[55][55];
+bool visited[55][55];
+int fr[] = {1, -1, 0, 0};
+int fc[] = {0, 0, 1, -1};
+ 
+#define valid(x, y) x >= 1 && x <= n && y >= 1 && y <= n
+#define pii pair<int, int>
+ 
+vector<pii>S, T;
+ 
+vector<pii> bsf(int r, int c)
+{
+    vector<pii>temp;
+    queue<pii>q;
+    pii tmp, tt;
+    tmp.first = r, tmp.second = c;
+    visited[r][c] = true;
+    temp.push_back(tmp);
+    q.push(tmp);
+    while(!q.empty())
+    {
+        tmp = q.front();
+        q.pop();
+        for(int k = 0; k < 4; k++)
+        {
+            int x = tmp.first + fr[k];
+            int y = tmp.second + fc[k];
+            if(valid(x, y) && !visited[x][y] && !arr[x][y])
+            {
+                tt.first = x, tt.second = y;
+                visited[x][y] = true;
+                q.push(tt);
+                temp.push_back(tt);
+            }
+        }
+    }
+    return temp;
+}
+ 
+int dist(pii x, pii y)
+{
+    int a, b;
+    a = (x.first - y.first)*(x.first - y.first);
+    b = (x.second - y.second)*(x.second - y.second);
+    return a + b;
+}
+ 
+ 
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+ 
+    int i, j, k, s, t, mn = 1000000000;
+    cin>>n;
+    cin>>r1>>c1>>r2>>c2;
+    string str;
+    for(i = 0; i < n; i++)
+    {
+        cin>>str;
+        for(j = 0; j < n; j++)
+        {
+            if(str[j] == '1')
+                arr[i+1][j+1] = 1;
+        }
+    }
+    S = bsf(r1, c1);
+    memset(visited, false, sizeof(visited));
+    T = bsf(r2, c2);
+     for(auto itS : S)
+     {
+        for(auto itT : T)
+        {
+            int dis = dist(itS, itT);
+            mn = min(dis, mn);
+        }
+     }
+        cout<<mn;
+    return 0;
+}
