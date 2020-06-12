@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int c[100005];
+int n, root;
+vector<int>adj[100005], dels;
+ 
+void dfs(int s)
+{
+    if(c[s])
+    {
+        int sz, cnt = 0;
+        sz = adj[s].size();
+        for(auto it : adj[s])
+        {
+            if(c[it])
+                cnt++;
+            dfs(it);
+        }
+        if(cnt == sz)
+            dels.push_back(s);
+    }
+    else
+    {
+        for(auto it : adj[s])
+            dfs(it);
+    }
+}
+ 
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+ 
+    int i, j, k, m, z, x;
+    cin>>n;
+    for(i = 1; i <= n; i++)
+    {
+        cin>>z>>c[i];
+        if(z == -1)
+        {
+            root = i;
+            continue;
+        }
+        adj[z].push_back(i);
+    }
+    for(auto it : adj[root])
+        dfs(it);
+    sort(dels.begin(), dels.end());
+    if(!dels.size())
+    {cout<<-1;return 0;}
+    for(auto it : dels)
+        cout<<it<<" ";
+    return 0;
+}
