@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int cost[100005];
+bool visited[100005];
+vector<int>adj[100005];
+long long int cnt;
+ 
+void bfs(int s)
+{
+    if(!visited[s])
+    {
+        int cst = cost[s];
+        queue<int>q;
+        q.push(s);
+        visited[s] = true;
+        while(!q.empty())
+        {
+            int t = q.front();
+            q.pop();
+            for(auto it : adj[t])
+            {
+                if(!visited[it])
+                {
+                    cst = min(cst, cost[it]);
+                    visited[it] = true;
+                    q.push(it);
+                }
+            }
+        }
+        cnt += cst;
+    }
+}
+ 
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(),cout.tie();
+ 
+    int n, i, j, k, m, x, y;
+    cin>>n>>m;
+    for(i = 1; i <= n; i++)
+        cin>>cost[i];
+    while(m--)
+    {
+        cin>>x>>y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    for(i = 1; i <= n; i++)
+        bfs(i);
+    cout<<cnt;
+}
